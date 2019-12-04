@@ -1,0 +1,10 @@
+E:\parcs\Parcs.NET\FloydWarshall\bin\Release\FloydWarshall.exe.config
+E:\parcs\Parcs.NET\FloydWarshall\bin\Release\FloydWarshall.exe
+E:\parcs\Parcs.NET\FloydWarshall\bin\Release\FloydWarshall.pdb
+E:\parcs\Parcs.NET\FloydWarshall\bin\Release\CommandLine.dll
+E:\parcs\Parcs.NET\FloydWarshall\bin\Release\CommandLine.xml
+E:\parcs\Parcs.NET\FloydWarshall\obj\Release\FloydWarshall.csprojAssemblyReference.cache
+E:\parcs\Parcs.NET\FloydWarshall\obj\Release\FloydWarshall.csproj.CoreCompileInputs.cache
+E:\parcs\Parcs.NET\FloydWarshall\obj\Release\FloydWarshall.csproj.CopyComplete
+E:\parcs\Parcs.NET\FloydWarshall\obj\Release\FloydWarshall.exe
+E:\parcs\Parcs.NET\FloydWarshall\obj\Release\FloydWarshall.pdb
