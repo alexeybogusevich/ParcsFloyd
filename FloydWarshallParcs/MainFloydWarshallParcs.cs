@@ -66,7 +66,7 @@ namespace FloydWarshallParcs
             }
         }
 
-        public override void Run(ModuleInfo info, CancellationToken token = default(CancellationToken))
+        public override void Run(ModuleInfo info, CancellationToken token = default)
         {
             int pointsNum = options.PointsNum;
             Stopwatch sw = new Stopwatch();
@@ -85,7 +85,7 @@ namespace FloydWarshallParcs
             {
                 points[i] = info.CreatePoint();
                 channels[i] = points[i].CreateChannel();
-                points[i].ExecuteClass("FloydWarshallParcs.FloydWarshallModule");
+                points[i].ExecuteClass("FloydWarshallParcs.ModuleFloydWarshall");
             }
 
             DistributeData();

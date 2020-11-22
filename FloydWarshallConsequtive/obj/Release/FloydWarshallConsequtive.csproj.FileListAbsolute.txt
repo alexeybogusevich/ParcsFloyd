@@ -1,0 +1,10 @@
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\bin\Release\FloydWarshallConsequtive.exe.config
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\bin\Release\FloydWarshallConsequtive.exe
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\bin\Release\FloydWarshallConsequtive.pdb
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\bin\Release\CommandLine.dll
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\bin\Release\CommandLine.xml
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\obj\Release\FloydWarshallConsequtive.csprojAssemblyReference.cache
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\obj\Release\FloydWarshallConsequtive.csproj.CoreCompileInputs.cache
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\obj\Release\FloydWarshallConsequtive.csproj.CopyComplete
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\obj\Release\FloydWarshallConsequtive.exe
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallConsequtive\obj\Release\FloydWarshallConsequtive.pdb

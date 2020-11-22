@@ -1,24 +1,14 @@
-﻿using System;
+﻿using CommandLine;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CommandLine;
 
 namespace FloydWarshallConsequtive
 {
     class Program
     {
-        class CommandLineOptions
-        {
-            [Option("input", Required = true, HelpText = "File path to the input array.")]
-            public string InputFile { get; set; }
-            [Option("output", Required = true, HelpText = "File path to the sorted array.")]
-            public string OutputFile { get; set; }
-        }
-
-        private static CommandLineOptions options;
-
         static int[][] GetMatrix(string filename)
         {
             return File.ReadAllLines(filename)
@@ -84,20 +74,21 @@ namespace FloydWarshallConsequtive
 
         static void Main(string[] args)
         {
-            options = new CommandLineOptions();
+            var input = args[0];
+            var output = args[1];
 
-            if (!File.Exists(options.InputFile))
+            if (!File.Exists(input))
             {
                 throw new ArgumentException("Input file doesn't exist");
             }
 
-            int[][] A = GetMatrix(options.InputFile);
+            int[][] A = GetMatrix(input);
 
             var sw = new Stopwatch();
             sw.Start();
             int[][] result = Floyd(A);
             sw.Stop();
-            SaveMatrix(options.OutputFile, result);
+            SaveMatrix(output, result);
             Console.WriteLine("Done");
             Console.WriteLine($"Total time {sw.ElapsedMilliseconds} ms ({sw.ElapsedTicks} ticks)");
             Console.ReadLine();

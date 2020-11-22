@@ -10,7 +10,7 @@ namespace FloydWarshallParcs
         private int number;
         private int[][] chunk;
 
-        public void Run(ModuleInfo info, CancellationToken token = default(CancellationToken))
+        public void Run(ModuleInfo info, CancellationToken token = default)
         {
             number = info.Parent.ReadInt();
             Console.WriteLine($"Current number {number}");
