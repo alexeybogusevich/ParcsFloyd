@@ -2,13 +2,10 @@
 using Parcs;
 using Parcs.Module.CommandLine;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace FloydWarshallParcs
 {
@@ -34,14 +31,6 @@ namespace FloydWarshallParcs
         static void Main(string[] args)
         {
             options = new CommandLineOptions();
-
-            if (args != null)
-            {
-                if (!CommandLine.Parser.Default.ParseArguments(args, options))
-                {
-                    throw new ArgumentException($@"Cannot parse the arguments. Possible usages: {options.GetUsage()}");
-                }
-            }
 
             if (!File.Exists(options.InputFile))
             {

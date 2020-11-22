@@ -8,3 +8,8 @@ E:\parcs\Parcs.NET\FloydWarshall\obj\Debug\FloydWarshall.csproj.CoreCompileInput
 E:\parcs\Parcs.NET\FloydWarshall\obj\Debug\FloydWarshall.csproj.CopyComplete
 E:\parcs\Parcs.NET\FloydWarshall\obj\Debug\FloydWarshall.exe
 E:\parcs\Parcs.NET\FloydWarshall\obj\Debug\FloydWarshall.pdb
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshall\obj\Debug\FloydWarshall.csprojAssemblyReference.cache
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshall\obj\Debug\FloydWarshall.exe.config
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshall\obj\Debug\FloydWarshall.csproj.CoreCompileInputs.cache
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshall\obj\Debug\FloydWarshall.exe
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshall\obj\Debug\FloydWarshall.pdb

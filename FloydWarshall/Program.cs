@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FloydWarshall
 {
@@ -84,33 +83,10 @@ namespace FloydWarshall
             return result;
         }
 
-        static void PrintMatrix(int[][] m)
-        {
-            int rowLength = m.Length;
-
-            for (int i = 0; i < rowLength; i++)
-            {
-                for (int j = 0; j < rowLength; j++)
-                {
-                    Console.Write(m[i][j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-
         static void Main(string[] args)
         {
             options = new CommandLineOptions();
             
-            
-            if (args != null)
-            {
-                if (!CommandLine.Parser.Default.ParseArguments(args, options))
-                {
-                    throw new ArgumentException($@"Cannot parse the arguments.");
-                }
-            }
-
             if (!File.Exists(options.InputFile))
             {
                 throw new ArgumentException("Input file doesn't exist");

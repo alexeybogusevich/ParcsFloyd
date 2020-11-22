@@ -33,8 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+    <Reference Include="CommandLine, Version=2.8.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.8.0\lib\net461\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="Parcs, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Parcs.2.0.0\lib\netstandard2.0\Parcs.dll</HintPath>
+    </Reference>
+    <Reference Include="Parcs.Module.CommandLine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Parcs.Module.CommandLine.2.0.0\lib\netstandard2.0\Parcs.Module.CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,23 +52,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FloydWarshallModule.cs" />
+    <Compile Include="ModuleFloydWarshall.cs" />
     <Compile Include="MainFloydWarshallParcs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Parcs.Module.CommandLine\Parcs.Module.CommandLine.csproj">
-      <Project>{b466666e-3104-4cf5-ade0-9441bb964aea}</Project>
-      <Name>Parcs.Module.CommandLine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Parcs\Parcs.csproj">
-      <Project>{73e7db23-be33-4c7f-89b5-e27523e71496}</Project>
-      <Name>Parcs</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
