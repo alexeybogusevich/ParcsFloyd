@@ -1,59 +1,34 @@
-﻿using CommandLine;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace FloydWarshallConsequtive
 {
     class Program
     {
-        static int[][] GetMatrix(string filename)
+        static void Main(string[] args)
         {
-            return File.ReadAllLines(filename)
-                   .Select(l => l.Split(' ').Where(k => k.Length > 0).Select(i => int.Parse(i)).ToArray())
-                   .ToArray();
-        }
+            var input = args[0];
 
-        static void SaveMatrix(string filename, int[][] m)
-        {
-            var sb = new StringBuilder();
-            for (int i = 0; i < m.Length; i++)
+            if (!File.Exists(input))
             {
-                for (int j = 0; j < m.Length; j++)
-                {
-                    sb.Append(m[i][j]);
-                    if (j != m.Length - 1)
-                    {
-                        sb.Append(" ");
-                    }
-                }
-                sb.AppendLine();
+                throw new ArgumentException("Input file doesn't exist");
             }
 
-            File.WriteAllText(filename, sb.ToString());
+            int[][] A = ReadMatrix();
+
+            var sw = new Stopwatch();
+            sw.Start();
+            int[][] result = Floyd(A);
+            sw.Stop();
+            Console.WriteLine("Done");
+            PrintMatrix(result);
+            Console.WriteLine($"Total time {sw.ElapsedMilliseconds} ms ({sw.ElapsedTicks} ticks)");
+            Console.ReadLine();
         }
 
-        static int MinWeight(int a, int b, int c)
-        {
-            if (a != int.MaxValue)
-            {
-                if (b != int.MaxValue && c != int.MaxValue)
-                    return Math.Min(a, b + c);
-                else
-                    return a;
-            }
-            else
-            {
-                if (b == int.MaxValue || c == int.MaxValue)
-                    return a;
-                else
-                    return b + c;
-            }
-        }
-
-        static int[][] Floyd(int[][] m)
+        private static int[][] Floyd(int[][] m)
         {
             int[][] result = (int[][])m.Clone();
             int rowLength = result.Length;
@@ -72,26 +47,53 @@ namespace FloydWarshallConsequtive
             return result;
         }
 
-        static void Main(string[] args)
+        private static int MinWeight(int a, int b, int c)
         {
-            var input = args[0];
-            var output = args[1];
-
-            if (!File.Exists(input))
+            if (a != int.MaxValue)
             {
-                throw new ArgumentException("Input file doesn't exist");
+                if (b != int.MaxValue && c != int.MaxValue)
+                    return Math.Min(a, b + c);
+                else
+                    return a;
             }
+            else
+            {
+                if (b == int.MaxValue || c == int.MaxValue)
+                    return a;
+                else
+                    return b + c;
+            }
+        }
 
-            int[][] A = GetMatrix(input);
+        private static int[][] ReadMatrix()
+        {
+            Console.WriteLine("Matrix size: ");
+            string input = Console.ReadLine();
+            var m = int.Parse(input);
+            var result = new int[m][];
+            for (int i = 0; i < m; i++)
+            {
+                result[i] = Console.ReadLine()
+                    .Replace("-1", int.MaxValue.ToString())
+                    .Split(' ')
+                    .Select(a => int.Parse(a))
+                    .ToArray();
+            }
+            return result;
+        }
 
-            var sw = new Stopwatch();
-            sw.Start();
-            int[][] result = Floyd(A);
-            sw.Stop();
-            SaveMatrix(output, result);
-            Console.WriteLine("Done");
-            Console.WriteLine($"Total time {sw.ElapsedMilliseconds} ms ({sw.ElapsedTicks} ticks)");
-            Console.ReadLine();
+        private static void PrintMatrix(int[][] m)
+        {
+            int rowLength = m.Length;
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < m[i].Length; j++)
+                {
+                    Console.Write(m[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }

@@ -22,3 +22,4 @@ C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallParcs\obj\Release\Fl
 C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallParcs\obj\Release\FloydWarshallParcs.csproj.CopyComplete
 C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallParcs\obj\Release\FloydWarshallParcs.exe
 C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallParcs\obj\Release\FloydWarshallParcs.pdb
+C:\Users\olboh\source\repos\ParcsFloudWarshall\FloydWarshallParcs\obj\Release\FloydWarshallParcs.csprojAssemblyReference.cache

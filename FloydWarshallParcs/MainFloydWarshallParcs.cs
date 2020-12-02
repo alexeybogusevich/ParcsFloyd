@@ -3,7 +3,6 @@ using Parcs;
 using Parcs.Module.CommandLine;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -11,18 +10,13 @@ namespace FloydWarshallParcs
 {
     class MainFloydWarshallParcs : MainModule
     {
-        private static CommandLineOptions options;
+        private static CLIOptions options;
 
-        class CommandLineOptions: BaseModuleOptions
+        class CLIOptions : BaseModuleOptions
         {
-            [Option("input", Required = true, HelpText = "File path to the input array.")]
-            public string InputFile { get; set; }
-            [Option("output", Required = true, HelpText = "File path to the sorted array.")]
-            public string OutputFile { get; set; }
             [Option("p", Required = true, HelpText = "Number of points.")]
-            public int PointsNum { get; set; }
+            public int PointsCount { get; set; }
         }
-
 
         private IChannel[] channels;
         private IPoint[] points;
@@ -30,53 +24,29 @@ namespace FloydWarshallParcs
 
         static void Main(string[] args)
         {
-            options = new CommandLineOptions();
+            options = new CLIOptions();
 
-            if (!File.Exists(options.InputFile))
+            if (args != null)
             {
-                throw new ArgumentException("Input file doesn't exist");
+                if (!Parser.Default.ParseArguments(args, options))
+                {
+                    throw new ArgumentException($@"Cannot parse the arguments. Possible usages: {options.GetUsage()}");
+                }
             }
 
             (new MainFloydWarshallParcs()).RunModule(options);
         }
 
-        static int[][] GetMatrix(string filename)
-        {
-            return File.ReadAllLines(filename)
-                   .Select(l => l.Split(' ').Where(k => k.Length > 0).Select(i => int.Parse(i)).ToArray())
-                   .ToArray();
-        }
-
-        static void SaveMatrix(string filename, int[][] m)
-        {
-            using (var file = File.CreateText(filename))
-            {
-                for (int i = 0; i < m.Length; i++)
-                {
-                    for (int j = 0; j < m.Length; j++)
-                    {
-                        file.Write(m[i][j]);
-                        if (j != m.Length - 1)
-                        {
-                            file.Write(" ");
-                        }
-                    }
-                    file.WriteLine();
-                }
-            }
-        }
-
         public override void Run(ModuleInfo info, CancellationToken token = default)
         {
-            int pointsNum = options.PointsNum;
+            int pointsNum = options.PointsCount;
             Stopwatch sw = new Stopwatch();
-            matrix = GetMatrix(options.InputFile);
+            matrix = ReadMatrix();
 
             if (matrix.Length % pointsNum != 0)
             {
                 throw new Exception($"Matrix size (now {matrix.Length}) should be divided by {pointsNum}!");
             }
-
 
             channels = new IChannel[pointsNum];
             points = new IPoint[pointsNum];
@@ -88,23 +58,54 @@ namespace FloydWarshallParcs
                 points[i].ExecuteClass("FloydWarshallParcs.ModuleFloydWarshall");
             }
 
-            DistributeData();
+            DistributeAllData();
 
             sw.Start();
-            ParallelFloyd();
+            RunParallelFloyd();
             sw.Stop();
 
-            int[][] result = GatherData();
+            int[][] result = GatherAllData();
 
-            SaveMatrix(options.OutputFile, result);
             Console.WriteLine("Done");
+            PrintMatrix(result);
             Console.WriteLine($"Total time {sw.ElapsedMilliseconds} ms ({sw.ElapsedTicks} ticks)");
             Console.ReadLine();
         }
 
-        private int[][] GatherData()
+        private static int[][] ReadMatrix()
         {
-            int chunkSize = matrix.Length / options.PointsNum;
+            Console.WriteLine("Matrix size: ");
+            string input = Console.ReadLine();
+            var m = int.Parse(input);
+            var result = new int[m][];
+            for (int i = 0; i < m; i++)
+            {
+                result[i] = Console.ReadLine()
+                    .Replace("-1", int.MaxValue.ToString())
+                    .Split(' ')
+                    .Select(a => int.Parse(a))
+                    .ToArray();
+            }
+            return result;
+        }
+
+        private void PrintMatrix(int[][] m)
+        {
+            int rowLength = m.Length;
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < m[i].Length; j++)
+                {
+                    Console.Write(m[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private int[][] GatherAllData()
+        {
+            int chunkSize = matrix.Length / options.PointsCount;
             int[][] result = new int[matrix.Length][];
 
             for (int i = 0; i < channels.Length; i++)
@@ -119,10 +120,10 @@ namespace FloydWarshallParcs
             return result;
         }
 
-        private void ParallelFloyd()
+        private void RunParallelFloyd()
         {
             object locker = new object();
-            int chunkSize = matrix.Length / options.PointsNum;
+            int chunkSize = matrix.Length / options.PointsCount;
             for (int k = 0; k < matrix.Length; k++)
             {
                 lock (locker)
@@ -137,17 +138,17 @@ namespace FloydWarshallParcs
                             channels[ch].WriteObject(currentRow);
                         }
                     }
-                }                
+                }
             }
         }
 
-        private void DistributeData()
+        private void DistributeAllData()
         {
             for (int i = 0; i < channels.Length; i++)
             {
                 Console.WriteLine($"Sent to channel: {i}");
                 channels[i].WriteData(i);
-                int chunkSize = matrix.Length / options.PointsNum;
+                int chunkSize = matrix.Length / options.PointsCount;
 
                 int[][] chunk = new int[chunkSize][];
 

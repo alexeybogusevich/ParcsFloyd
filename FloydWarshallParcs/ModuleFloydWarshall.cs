@@ -1,6 +1,5 @@
 ﻿using Parcs;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace FloydWarshallParcs
@@ -18,17 +17,16 @@ namespace FloydWarshallParcs
 
             int n = chunk[0].Length;
             int c = chunk.Length;
-            int p = n / c;
             Console.WriteLine($"Chunk {c}x{n}");
 
             for (int k = 0; k < n; k++)
             {
                 int[] currentRow;
 
-                if (k >= number * c && k < number*c + c)
+                if (k >= number * c && k < number * c + c)
                 {
                     currentRow = chunk[k % c];
-                    info.Parent.WriteObject(chunk[k % c]);                    
+                    info.Parent.WriteObject(chunk[k % c]);
                 }
                 else
                 {
