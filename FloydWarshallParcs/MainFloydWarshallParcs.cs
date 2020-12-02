@@ -3,6 +3,7 @@ using Parcs;
 using Parcs.Module.CommandLine;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -14,6 +15,10 @@ namespace FloydWarshallParcs
 
         class CLIOptions : BaseModuleOptions
         {
+            [Option("input", Required = true, HelpText = "File path to the input array.")]
+            public string InputFile { get; set; }
+            [Option("output", Required = true, HelpText = "File path to the sorted array.")]
+            public string OutputFile { get; set; }
             [Option("p", Required = true, HelpText = "Number of points.")]
             public int PointsCount { get; set; }
         }
@@ -41,7 +46,7 @@ namespace FloydWarshallParcs
         {
             int pointsNum = options.PointsCount;
             Stopwatch sw = new Stopwatch();
-            matrix = ReadMatrix();
+            matrix = GetMatrix(options.InputFile);
 
             if (matrix.Length % pointsNum != 0)
             {
@@ -66,10 +71,36 @@ namespace FloydWarshallParcs
 
             int[][] result = GatherAllData();
 
+            SaveMatrix(options.OutputFile, result);
             Console.WriteLine("Done");
-            PrintMatrix(result);
             Console.WriteLine($"Total time {sw.ElapsedMilliseconds} ms ({sw.ElapsedTicks} ticks)");
             Console.ReadLine();
+        }
+
+        static int[][] GetMatrix(string filename)
+        {
+            return File.ReadAllLines(filename)
+                   .Select(l => l.Split(' ').Where(k => k.Length > 0).Select(i => int.Parse(i)).ToArray())
+                   .ToArray();
+        }
+
+        static void SaveMatrix(string filename, int[][] m)
+        {
+            using (var file = File.CreateText(filename))
+            {
+                for (int i = 0; i < m.Length; i++)
+                {
+                    for (int j = 0; j < m.Length; j++)
+                    {
+                        file.Write(m[i][j]);
+                        if (j != m.Length - 1)
+                        {
+                            file.Write(" ");
+                        }
+                    }
+                    file.WriteLine();
+                }
+            }
         }
 
         private static int[][] ReadMatrix()
