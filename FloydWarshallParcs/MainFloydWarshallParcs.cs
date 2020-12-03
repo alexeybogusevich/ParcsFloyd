@@ -80,7 +80,10 @@ namespace FloydWarshallParcs
         static int[][] GetMatrix(string filename)
         {
             return File.ReadAllLines(filename)
-                   .Select(l => l.Split(' ').Where(k => k.Length > 0).Select(i => int.Parse(i)).ToArray())
+                   .Select(l => l.Split(' ')
+                   .Where(k => k.Length > 0)
+                   .Select(i => int.Parse(i.Replace("-1", int.MaxValue.ToString())))
+                   .ToArray())
                    .ToArray();
         }
 
@@ -159,7 +162,7 @@ namespace FloydWarshallParcs
             {
                 lock (locker)
                 {
-                    int currentSupplier = k / chunkSize;
+                    int currentSupplier = k / chunkSize; //daemon no.
                     int[] currentRow = channels[currentSupplier].ReadObject<int[]>();
 
                     for (int ch = 0; ch < channels.Length; ch++)

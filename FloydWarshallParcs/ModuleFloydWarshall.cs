@@ -15,17 +15,17 @@ namespace FloydWarshallParcs
             Console.WriteLine($"Current number {number}");
             chunk = info.Parent.ReadObject<int[][]>();
 
-            int n = chunk[0].Length;
-            int c = chunk.Length;
+            int n = chunk[0].Length; //width
+            int c = chunk.Length; //height
             Console.WriteLine($"Chunk {c}x{n}");
 
-            for (int k = 0; k < n; k++)
+            for (int k = 0; k < n; k++) // ->
             {
                 int[] currentRow;
 
                 if (k >= number * c && k < number * c + c)
                 {
-                    currentRow = chunk[k % c];
+                    currentRow = chunk[k % c]; // iterate through all chunk rows
                     info.Parent.WriteObject(chunk[k % c]);
                 }
                 else
